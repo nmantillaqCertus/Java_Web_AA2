@@ -6,5 +6,5 @@ import com.id.spring.app.model.Pokemon;
 
 public interface IPokemonService {
 	
-	public List<Pokemon> quienEsEsePokemon2022();
+	public List<Pokemon> ObtenerListaPokemon();
 }

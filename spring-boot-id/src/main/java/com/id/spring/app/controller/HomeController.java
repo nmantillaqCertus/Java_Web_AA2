@@ -34,7 +34,7 @@ public class HomeController {
 		
 		model.addAttribute("titlePage", titlePage);
 		model.addAttribute("hey", hey);
-		model.addAttribute("ListaPokemon", IpService.quienEsEsePokemon2022());
+		model.addAttribute("ListaPokemon", IpService.ObtenerListaPokemon());
 				
 		return "home";
 	}

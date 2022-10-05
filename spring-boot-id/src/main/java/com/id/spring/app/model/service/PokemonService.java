@@ -12,7 +12,7 @@ import com.id.spring.app.model.Pokemon;
 public class PokemonService implements IPokemonService{
 
 	@Override
-	public List<Pokemon> quienEsEsePokemon2022() {
+	public List<Pokemon> ObtenerListaPokemon() {
 		//Creando nueva instanci de un pokemon (pokemoncito)
 		Pokemon pokemoncito = new Pokemon();
 		Pokemon pokemoncito2 = new Pokemon();
