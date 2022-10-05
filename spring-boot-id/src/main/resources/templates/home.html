@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title th:text = "${titlePage}"></title>
+</head>
+<body>
+	
+	<h1 th:text = "${hey}"></h1>
+	<br>
+	<div th:each = "pokemon : ${ListaPokemon}">
+		<span>
+			<p th:text = "${pokemon.nombre}"></p>
+			<p th:text = "${pokemon.tipo}"></p>
+			<p th:text = "${pokemon.habilidad}"></p>
+			<p th:text = "${pokemon.nivelPoder}"></p>
+	</span>	
+		
+	</div>
+	
+
+</body>
+</html>
