@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.id.spring.app.model.service.IPokemonService;
@@ -16,25 +17,40 @@ public class HomeController {
 	@Value("${titlePage.param}")
 	private String titlePage;
 	
-	@Value("${hey.param}")
-	private String hey;
-	
-	//PokemonService pokemonService = new PokemonService(); // Clásico de Java
-	
-	//@Autowired 
-	//PokemonService pokemonService; //Spring
-	
+		
 	@Autowired 
-	private IPokemonService IpService; // Spring - Buenas prácticas
-	
-	
-	
+	private IPokemonService IpService;
+		
 	@GetMapping("/home")
 	public String Home(Model model) {
 		
 		model.addAttribute("titlePage", titlePage);
-		model.addAttribute("hey", hey);
+		model.addAttribute("titulo", "Iniciando con Spring Boot");
 		model.addAttribute("ListaPokemon", IpService.ObtenerListaPokemon());
+				
+		return "home";
+	}
+	
+	@GetMapping("/form")
+	public String Formulario(Model model) {
+		
+		//creandoi el pokemon
+		//IpService.CrearPokemon(Pokemon pokemon)
+		
+		model.addAttribute("titlePage", titlePage);
+		model.addAttribute("titulo", "Formulario con Spring Boot");
+				
+		return "formulario";
+	}
+	
+	@PostMapping("/form")
+	public String CrearFormulario(Model model) {
+		
+		//creandoi el pokemon
+		//IpService.CrearPokemon(Pokemon pokemon)
+		
+		model.addAttribute("titlePage", titlePage);
+		model.addAttribute("titulo", "Formulario con Spring Boot");
 				
 		return "home";
 	}
