@@ -38,26 +38,30 @@
 	<hr>
 	<div class="container">
 		<div  class="card p-4" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-			<form>
-			<div class="form-group">
-				<label for="idNombre">Nombre</label> <input
-					type="text" class="form-control" id="idNombre">
-			</div>
-			<div class="form-group">
-				<label for="idTipo">Tipo</label> <input
-					type="text" class="form-control" id="idTipo"> 
-			</div>
-			<div class="form-group">
-				<label for="idHabilidad">Habilidad</label> <input
-					type="text" class="form-control" id="idHabilidad">
-			</div>
-			<div class="form-group">
-				<label for="idNivelPoder">Nivel Poder</label> <input
-					type="text" class="form-control" id="idNivelPoder">
-			</div>
-			
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
+			<form th:action="@{/app/Nuevoform}" method="post">
+				<div class="form-group">
+					<label for="idNombre">Nombre</label> <input type="text" name="nombre"
+						class="form-control" id="idNombre">
+				</div>
+				<div class="form-group">
+					<label for="idTipo">Tipo</label> <input type="text" name="tipo"
+						class="form-control" id="idTipo">
+				</div>
+				<div class="form-group">
+					<label for="idHabilidad">Habilidad</label> <input type="text" name="habilidad"
+						class="form-control" id="idHabilidad">
+				</div>
+				<div class="form-group">
+					<label for="idNivelPoder">Nivel Poder</label> <input type="text" name="nivelPoder"
+						class="form-control" id="idNivelPoder">
+				</div>
+				<div class="form-group">
+					<label for="idUriImagen">Enlace Imagen</label> <input type="text" name="uriImagen"
+						class="form-control" id="idUriImagen">
+				</div>
+
+				<button type="submit" class="btn btn-primary"> Guardar</button>
+			</form>
 		</div>
 		
 

@@ -41,6 +41,16 @@ public class PokemonService implements IPokemonService{
 		
 		return listaPokemones;
 	}
+	
+	@Override
+	public String CrearPokemon(Pokemon pokemoncito) {
+		
+		//Codigo de envio a la DB
+		
+		return "Guardado Correctamente";
+	}
+	
+	
 
 
 }

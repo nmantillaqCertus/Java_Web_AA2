@@ -43,13 +43,13 @@
 				<p th:text="${pokemon.nombre}"></p>
 				<p th:text="${pokemon.tipo}"></p>
 				<p th:text="${pokemon.habilidad}"></p>
-				<p th:text="${pokemon.nivelPoder}"></p>
-				<p>Otros</p>
+				<p th:text="${pokemon.nivelPoder}"></p>		
+				<img th:src="${pokemon.uriImagen}"/>			
 			</span>
 
 		</div>
 
-		<button class="btn btn-sm btn-success">Demo Boton</button>
+		<span th:text="${respuesta}"></span>
 	</div>
 
 
