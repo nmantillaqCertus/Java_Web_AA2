@@ -1,17 +1,17 @@
 package com.id.spring.app.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.springframework.beans.factory.ListableBeanFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.id.spring.app.model.Pokemon;
 import com.id.spring.app.model.service.IPokemonService;
@@ -40,9 +40,6 @@ public class HomeController {
 	@GetMapping("/form")
 	public String Formulario(Model model) {
 		
-		//creandoi el pokemon
-		//IpService.CrearPokemon(Pokemon pokemon)
-		
 		model.addAttribute("titlePage", titlePage);
 		model.addAttribute("titulo", "Formulario con Spring Boot");
 				
@@ -50,16 +47,19 @@ public class HomeController {
 	}
 	
 	@PostMapping("/Nuevoform")
-	public String CrearFormulario(Pokemon pokemoncito,Model model) {
-	/*public String CrearFormulario(Model model, @RequestParam String nombre, 
-											   @RequestParam String tipo, 
-											   @RequestParam String habilidad, 
-											   @RequestParam String nivelPoder) {
-		Pokemon pk =  new Pokemon();
-		pk.setNombre(nombre);
-		pk.setTipo(tipo);
-		pk.setHabilidad(habilidad);
-		pk.setNivelPoder(nivelPoder);*/
+	public String CrearFormulario(@Validated Pokemon pokemoncito, BindingResult br ,Model model) {
+		
+		if(br.hasErrors()) {
+			Map<String, String> MapErrores =  new HashMap<>();
+			br.getFieldErrors().forEach(error -> {				
+				String ClaveCampo = error.getField();
+				String ValorError = "El campo ".concat(ClaveCampo).concat(" ").concat(error.getDefaultMessage());
+				
+				MapErrores.put(ClaveCampo, ValorError);
+			});			
+			model.addAttribute("Errores", MapErrores);			
+			return "home";
+		}
 		
 		List<Pokemon> pokemonX = new ArrayList<>();
 		pokemonX.add(pokemoncito);
@@ -74,6 +74,7 @@ public class HomeController {
 		
 		
 		return "home";
+		
 	}
 
 }

@@ -40,23 +40,38 @@
 		<div  class="card p-4" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
 			<form th:action="@{/app/Nuevoform}" method="post">
 				<div class="form-group">
-					<label for="idNombre">Nombre</label> <input type="text" name="nombre"
+					<label for="idNombre">Nombre</label> 
+					<input type="text" name="nombre"
 						class="form-control" id="idNombre">
-				</div>
+				</div>				
+				<span th:if = "${ Errores!= null && Errores.containsKey('nombre')}" th:text = "${Errores.nombre}" ></span>
+				
 				<div class="form-group">
-					<label for="idTipo">Tipo</label> <input type="text" name="tipo"
+					<label for="idTipo">Tipo</label> 
+					<input type="text" name="tipo"
 						class="form-control" id="idTipo">
 				</div>
+				<span th:if = "${ Errores!= null && Errores.containsKey('tipo')}" th:text = "${Errores.tipo}" ></span>
+				
+				
 				<div class="form-group">
-					<label for="idHabilidad">Habilidad</label> <input type="text" name="habilidad"
+					<label for="idHabilidad">Habilidad</label> 
+					<input type="text" name="habilidad"
 						class="form-control" id="idHabilidad">
 				</div>
+				<span th:if = "${ Errores!= null && Errores.containsKey('habilidad')}" th:text = "${Errores.habilidad}" ></span>
+				
 				<div class="form-group">
-					<label for="idNivelPoder">Nivel Poder</label> <input type="text" name="nivelPoder"
+					<label for="idNivelPoder">Nivel Poder</label> 
+					<input type="text" name="nivelPoder"
 						class="form-control" id="idNivelPoder">
 				</div>
+				<span th:if = "${ Errores!= null && Errores.containsKey('nivelPoder')}" th:text = "${Errores.nivelPoder}" ></span>
+				
+				
 				<div class="form-group">
-					<label for="idUriImagen">Enlace Imagen</label> <input type="text" name="uriImagen"
+					<label for="idUriImagen">Enlace Imagen</label> 
+					<input type="text" name="uriImagen"
 						class="form-control" id="idUriImagen">
 				</div>
 

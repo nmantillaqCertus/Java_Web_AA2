@@ -1,11 +1,23 @@
 package com.id.spring.app.model;
 
+import javax.validation.constraints.NotEmpty;
 public class Pokemon {
+	
+	@NotEmpty (message = "no debe ser vacío")
 	private String nombre;
+	
+	@NotEmpty (message = "no debe ser vacío")
 	private String categoria;
+	
+	@NotEmpty (message = "no debe ser vacío")
 	private String tipo;
+	
+	@NotEmpty (message = "no debe ser vacío")	
 	private String habilidad;
+	
+	@NotEmpty (message = "no debe ser vacío")
 	private String nivelPoder;
+	
 	private String uriImagen;
 	
 	
