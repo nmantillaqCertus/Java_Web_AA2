@@ -38,42 +38,45 @@
 	<hr>
 	<div class="container">
 		<div  class="card p-4" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
-			<form th:action="@{/app/Nuevoform}" method="post">
+		
+		
+			<form th:action="@{/app/Nuevoform}" th:object="${pokemon}"   method="post">
 				<div class="form-group">
 					<label for="idNombre">Nombre</label> 
-					<input type="text" name="nombre"
+					<input type="text" name="nombre" th:field="*{nombre}"
 						class="form-control" id="idNombre">
 				</div>				
-				<span th:if = "${ Errores!= null && Errores.containsKey('nombre')}" th:text = "${Errores.nombre}" ></span>
+				<span th:if = "${#fields.hasErrors('nombre')}" th:errors = "*{nombre}" ></span>
 				
 				<div class="form-group">
 					<label for="idTipo">Tipo</label> 
-					<input type="text" name="tipo"
+					<input type="text" name="tipo" th:field="*{tipo}"
 						class="form-control" id="idTipo">
 				</div>
-				<span th:if = "${ Errores!= null && Errores.containsKey('tipo')}" th:text = "${Errores.tipo}" ></span>
+				<span th:if = "${#fields.hasErrors('tipo')}" th:errors = "*{tipo}" ></span>
 				
 				
 				<div class="form-group">
 					<label for="idHabilidad">Habilidad</label> 
-					<input type="text" name="habilidad"
+					<input type="text" name="habilidad" th:field="*{habilidad}"
 						class="form-control" id="idHabilidad">
 				</div>
-				<span th:if = "${ Errores!= null && Errores.containsKey('habilidad')}" th:text = "${Errores.habilidad}" ></span>
+				<span th:if = "${#fields.hasErrors('habilidad')}" th:errors = "*{habilidad}" ></span>
 				
 				<div class="form-group">
 					<label for="idNivelPoder">Nivel Poder</label> 
-					<input type="text" name="nivelPoder"
+					<input type="text" name="nivelPoder" th:field="*{nivelPoder}"
 						class="form-control" id="idNivelPoder">
 				</div>
-				<span th:if = "${ Errores!= null && Errores.containsKey('nivelPoder')}" th:text = "${Errores.nivelPoder}" ></span>
+				<!-- <span th:if = "${#fields.hasErrors('nivelPoder')}" th:errors = "*{nivelPoder}" ></span>-->
 				
 				
 				<div class="form-group">
 					<label for="idUriImagen">Enlace Imagen</label> 
-					<input type="text" name="uriImagen"
+					<input type="text" name="uriImagen"  th:field="*{uriImagen}"
 						class="form-control" id="idUriImagen">
 				</div>
+				<!-- <span th:if = "${#fields.hasErrors('uriImagen')}" th:errors = "*{uriImagen}" ></span> -->
 
 				<button type="submit" class="btn btn-primary"> Guardar</button>
 			</form>
