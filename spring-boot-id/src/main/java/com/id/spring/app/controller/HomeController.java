@@ -1,6 +1,8 @@
 package com.id.spring.app.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,19 @@ public class HomeController {
 		model.addAttribute("pokemon", pokemoncito);
 				
 		return "home";
+	}
+	
+	@GetMapping("/listar")
+	public String ListarPokemon(Model model) {
+		
+		List<Pokemon> listaPokemon = new ArrayList<Pokemon>();
+		
+		model.addAttribute("titlePage", titlePage);
+		model.addAttribute("titulo", "Lista de Pokemones");
+		model.addAttribute("resumen", "Lista de los mejores pokemones");	
+		model.addAttribute("ListaPokemon", listaPokemon);
+				
+		return "lista";
 	}
 	
 	@GetMapping("/form")

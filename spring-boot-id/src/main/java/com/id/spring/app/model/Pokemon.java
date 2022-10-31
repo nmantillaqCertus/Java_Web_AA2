@@ -1,7 +1,12 @@
 package com.id.spring.app.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "pokemon")
 public class Pokemon {
 	
 	private String idPokemon;
