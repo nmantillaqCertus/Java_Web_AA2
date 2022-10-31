@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title th:text="${titlePage}"></title>
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+</head>
+<body>
+	<nav style="box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="/app/home"> <img
+			src="/resources/Icons/bootstrap-solid.svg" width="30" height="30"
+			class="d-inline-block align-top" alt=""> Spring Boot
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link"
+					href="/app/home">Inicio <span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item"><a class="nav-link" href="/app/form">Formulario</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">Pokemones</a></li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search"
+					aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0">Búsqueda</button>
+			</form>
+		</div>
+	</nav>
+
+	<div class="container mt-3">
+		<div class="jumbotron">
+			<h1 class="display-4" th:text="${titulo}"></h1>
+			<p class="lead" th:text="${resumen}"></p>
+			<hr class="my-4"/>
+			
+			<div style="display: flex;justify-content: center;">
+				
+				<ul style="list-style: none;">
+					<li>
+						<div class="card mb-3" style="max-width: 540px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+						  <div class="row no-gutters">
+						    <div class="col-md-4">
+						      <img style="width: 100%; object-fit: cover;margin: auto;" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png" alt="...">
+						    </div>
+						    <div class="col-md-8">
+						      <div class="card-body">
+						        <h5 class="card-title">Card title</h5>
+						        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+						        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</li>
+					<li>
+						<div class="card mb-3" style="max-width: 540px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+						  <div class="row no-gutters">
+						    <div class="col-md-4">
+						      <img style="width: 100%; object-fit: cover;margin: auto;"  src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png" alt="...">
+						    </div>
+						    <div class="col-md-8">
+						      <div class="card-body">
+						        <h5 class="card-title">Card title</h5>
+						        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+						        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</li>
+				</ul>				
+			
+			</div>		
+		
+		</div>	
+		
+	
+	</div>
+	
+	<script src="/resources/js/jquery.slim.min.js"></script>
+	<script src="/resources/js/popper.min.js"></script>
+	<script src="/resources/js/bootstrap.min.js"></script>
+</body>
+</html>
