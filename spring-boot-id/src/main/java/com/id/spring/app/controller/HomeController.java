@@ -1,9 +1,6 @@
 package com.id.spring.app.controller;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -43,25 +41,22 @@ public class HomeController {
 	}
 	
 	@GetMapping("/listar")
-	public String ListarPokemon(Model model) {
-		
-		List<Pokemon> listaPokemon = new ArrayList<Pokemon>();
-		
+	public String ListarPokemon(Model model) {				
 		model.addAttribute("titlePage", titlePage);
 		model.addAttribute("titulo", "Lista de Pokemones");
 		model.addAttribute("resumen", "Lista de los mejores pokemones");	
-		model.addAttribute("ListaPokemon", listaPokemon);
-				
+		model.addAttribute("ListaPokemon", IpService.ObtenerListaPokemon());
+		model.addAttribute("respuesta", "");
 		return "lista";
 	}
 	
 	@GetMapping("/form")
 	public String Formulario(Model model) {
 		
-		String codUnico = UUID.randomUUID().toString();
+		//String codUnico = UUID.randomUUID().toString();
 		
 		Pokemon pokemoncito = new Pokemon();	
-		pokemoncito.setIdPokemon(codUnico);
+		pokemoncito.setIdPokemon(123);
 		pokemoncito.setNivelPoder(""+Math.random());
 		
 		model.addAttribute("titlePage", titlePage);
@@ -80,19 +75,33 @@ public class HomeController {
 		
 		if(br.hasErrors()) {					
 			return "formulario";
-		}
-				
+		}				
 		String respuesta = IpService.CrearPokemon(pokemoncito);
-				
+		
 		model.addAttribute("titlePage", titlePage);
-		model.addAttribute("titulo", "Formulario con Spring Boot");
-		model.addAttribute("pokemon", pokemoncito);		
+		model.addAttribute("titulo", "Lista de Pokemones");	
+		model.addAttribute("resumen", "Lista de los mejores pokemones");
+		model.addAttribute("ListaPokemon", IpService.ObtenerListaPokemon());
 		model.addAttribute("respuesta", respuesta);
 		
 		status.setComplete();		
 		
-		return "home";
+		return "lista";
 		
+	}
+	
+	
+	@GetMapping("/Editar/{id}")
+	private String editarPokemon( @PathVariable int id ,Model model) {
+		
+		Optional<Pokemon> pokemon = IpService.EditarPokemon(id);
+						
+		model.addAttribute("titlePage", titlePage);
+		model.addAttribute("titulo", "Formulario con Spring Boot -  Edición");
+		
+		model.addAttribute("pokemon", pokemon);
+				
+		return "formulario";		
 	}
 
 }

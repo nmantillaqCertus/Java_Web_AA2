@@ -38,44 +38,44 @@
 		<div class="jumbotron">
 			<h1 class="display-4" th:text="${titulo}"></h1>
 			<p class="lead" th:text="${resumen}"></p>
+			
+			<div class="alert alert-success" role="alert">
+			  <p th:text="${respuesta}"></p>
+			</div>
+			<div class="alert alert-danger" role="alert">
+			  <p th:text="${respuesta}"></p>
+			</div>
+			
 			<hr class="my-4"/>
 			
-			<div style="display: flex;justify-content: center;">
+			<div style="display: flex;justify-content: center; flex-wrap: wrap;">
 				
-				<ul style="list-style: none;">
+				<ul th:each="pokemon : ${ListaPokemon}"  style="list-style: none;">
 					<li>
 						<div class="card mb-3" style="max-width: 540px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
 						  <div class="row no-gutters">
 						    <div class="col-md-4">
-						      <img style="width: 100%; object-fit: cover;margin: auto;" src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png" alt="...">
+						      <img style="width: 100%; object-fit: cover;margin: auto;" th:src="${pokemon.uriImagen}" alt="Pokemon">
 						    </div>
 						    <div class="col-md-8">
 						      <div class="card-body">
-						        <h5 class="card-title">Card title</h5>
-						        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+						        <h5 class="card-title" th:text="${pokemon.nombre}"></h5>
+						        <ul class="list-group list-group-flush">
+								  <li class="list-group-item" th:text="${pokemon.categoria}" ></li>
+								  <li class="list-group-item" th:text="${pokemon.tipo}" ></li>
+								  <li class="list-group-item" th:text="${pokemon.habilidad}" ></li>
+								  <li class="list-group-item" th:text="${pokemon.nivelPoder}" ></li>
+								</ul>
+								<div>
+									<a th:href="@{/app/Editar/}+${pokemon.idPokemon}" class="btn btn-sm btn-info" >Editar</a>
+									<a href="" class="btn btn-sm btn-danger">Eliminar</a>
+								</div>
 						      </div>
 						    </div>
 						  </div>
 						</div>
 					</li>
-					<li>
-						<div class="card mb-3" style="max-width: 540px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
-						  <div class="row no-gutters">
-						    <div class="col-md-4">
-						      <img style="width: 100%; object-fit: cover;margin: auto;"  src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png" alt="...">
-						    </div>
-						    <div class="col-md-8">
-						      <div class="card-body">
-						        <h5 class="card-title">Card title</h5>
-						        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-						        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-					</li>
-				</ul>				
+				</ul>		
 			
 			</div>		
 		

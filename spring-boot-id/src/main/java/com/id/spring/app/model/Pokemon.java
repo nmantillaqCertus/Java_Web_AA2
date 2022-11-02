@@ -1,6 +1,9 @@
 package com.id.spring.app.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -9,7 +12,9 @@ import javax.validation.constraints.Size;
 @Table(name = "pokemon")
 public class Pokemon {
 	
-	private String idPokemon;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int idPokemon;
 		
 	@NotEmpty (message = "Completar el nombre del pokemon")
 	private String nombre;	
@@ -25,11 +30,11 @@ public class Pokemon {
 	private String uriImagen;
 	
 			
-	public String getIdPokemon() {
+	public int getIdPokemon() {
 		return idPokemon;
 	}
 
-	public void setIdPokemon(String idPokemon) {
+	public void setIdPokemon(int idPokemon) {
 		this.idPokemon = idPokemon;
 	}
 
