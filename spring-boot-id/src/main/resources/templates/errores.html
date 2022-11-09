@@ -1,12 +1,31 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/plantilla/plantilla :: head"></head>
 <body>
+	<header th:replace="/plantilla/plantilla :: header"></header>
 
-	<h1>Acá se controlará los errores</h1>
+	<div class="container mt-3">
+		<div class="jumbotron">
+			<h1 class="display-4" th:text="${titulo}"></h1>
+			<hr>
 
+			<div class="alert alert-danger" role="alert">
+				<p th:text="${respuesta}"></p>
+			</div>
+
+			<hr class="my-4" />
+
+			<div style="display: flex; justify-content: center; flex-wrap: wrap;">
+
+				<p class="lead" th:text="${errores}"></p>
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<footer th:replace="/plantilla/plantilla :: footer"></footer>
 </body>
 </html>

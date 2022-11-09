@@ -11,7 +11,7 @@
 		<div  class="card p-4" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;">
 		
 		
-			<form th:action="@{/app/Nuevoform}" th:object="${pokemon}"   method="post">
+			<form th:action="@{/app/Nuevoform}" th:object="${pokemon}" method="post"  enctype="multipart/form-data">
 				<div class="form-group">
 					<label for="idNombre">Nombre</label> 
 					<input type="text" name="nombre" th:field="*{nombre}"
@@ -44,8 +44,7 @@
 				
 				<div class="form-group">
 					<label for="idUriImagen">Enlace Imagen</label> 
-					<input type="text" name="uriImagen"  th:field="*{uriImagen}"
-						class="form-control" id="idUriImagen">
+					<input type="file" name="fileImagen" class="form-control" id="idUriImagen">
 				</div>
 				<!-- <span th:if = "${#fields.hasErrors('uriImagen')}" th:errors = "*{uriImagen}" ></span> -->
 

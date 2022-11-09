@@ -1,5 +1,10 @@
 package com.id.spring.app.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,8 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.id.spring.app.model.Pokemon;
 import com.id.spring.app.model.Response;
@@ -72,11 +79,41 @@ public class HomeController {
 	}
 
 	@PostMapping("/Nuevoform")
-	public String CrearFormulario(@Validated Pokemon pokemoncito, BindingResult br, Model model, SessionStatus status) {
-
+	public String CrearFormulario(
+			@Validated Pokemon pokemoncito, 
+			BindingResult br, 
+			Model model, 
+			@RequestParam("fileImagen") MultipartFile imgPokemon,  //EN ARCHIVO
+			SessionStatus status) {
 		if (br.hasErrors()) {
 			return "formulario";
 		}
+		
+		//Logica de file Pokemon
+		if (!imgPokemon.isEmpty()) {
+			Path rutaImagenesPokemon =  Paths.get("src//main//resources//static//Img_Pokemon");
+			String pathGeneric = rutaImagenesPokemon.toFile().getAbsolutePath();
+						
+			try {
+				byte[] bytesImgPokemon = imgPokemon.getBytes();
+				Path enlaceCompleto = Paths.get(pathGeneric+"//"+imgPokemon.getOriginalFilename());
+				Files.write(enlaceCompleto, bytesImgPokemon);
+				
+				pokemoncito.setUriImagen(imgPokemon.getOriginalFilename());
+				
+				
+			} catch (IOException e) {
+				model.addAttribute("titulo", "Spring Framework - Control de Errores");
+				model.addAttribute("respuesta", "Ocurrió un error al procesar el archivo");
+				model.addAttribute("errores", e.getStackTrace());
+				
+				return "errores";
+			}
+			
+			
+		}
+		
+		
 		model.addAttribute("titlePage", titlePage);
 		Response<Pokemon> response = IpService.CrearPokemon(pokemoncito);
 
