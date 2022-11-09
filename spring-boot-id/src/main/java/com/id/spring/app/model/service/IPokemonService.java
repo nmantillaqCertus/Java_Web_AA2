@@ -1,15 +1,16 @@
 package com.id.spring.app.model.service;
 
-import java.util.List;
-import java.util.Optional;
 
 import com.id.spring.app.model.Pokemon;
+import com.id.spring.app.model.Response;
 
 public interface IPokemonService {
 	
-	public List<Pokemon> ObtenerListaPokemon();
+	public Response<Pokemon> ObtenerListaPokemon();
 	
-	public String CrearPokemon(Pokemon pokemoncito );
+	public Response<Pokemon> CrearPokemon(Pokemon pokemoncito );
 	
-	public Optional<Pokemon> EditarPokemon(Integer id);
+	public Response<Pokemon> EditarPokemon(Integer id);
+	
+	public Response<Pokemon> EliminarPokemon(Integer id);
 }

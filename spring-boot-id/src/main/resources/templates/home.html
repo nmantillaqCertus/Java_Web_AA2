@@ -1,63 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="utf-8">
-<title th:text="${titlePage}"></title>
-<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-</head>
+<head th:replace="/plantilla/plantilla :: head" ></head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#"> <img
-			src="/resources/Icons/bootstrap-solid.svg" width="30" height="30"
-			class="d-inline-block align-top" alt=""> Spring Boot
-		</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+	<header th:replace="/plantilla/plantilla :: header"></header>
 
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Inicio
-						<span class="sr-only">(current)</span>
-				</a></li>
-				<li class="nav-item"><a class="nav-link" href="/app/form">Formulario</a></li>
-				<li class="nav-item"><a class="nav-link" href="/app/listar">Pokemones</a></li>
-			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search"
-					aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0">Búsqueda</button>
-			</form>
-		</div>
-	</nav>
-
-
-	<div class="container">
-		<h1 th:text="${titulo}"></h1>
-		<br>
-		<div>
-			<p th:text="${pokemon.idPokemon}"></p>
-			<p th:text="${pokemon.nombre}"></p>
-			<p th:text="${pokemon.tipo}"></p>
-			<p th:text="${pokemon.habilidad}"></p>
-			<p th:text="${pokemon.nivelPoder}"></p>
-
-			<img th:src="${pokemon.uriImagen}" />
+	<!--Inicio de contenido-->
+	<div class="container mt-3">
+		<div class="jumbotron">
+			<h1 class="display-4" th:text="${titulo}"></h1>
+			<hr>
+			<div>
+				<span class="lead" th:text="${Mensaje}"></span>
+			</div>
 
 		</div>
-
-		<span th:text="${respuesta}"></span>
-
-
 	</div>
+	<!--Fin de contenido-->
 
-
-
-	<script src="/resources/js/jquery.slim.min.js"></script>
-	<script src="/resources/js/popper.min.js"></script>
-	<script src="/resources/js/bootstrap.min.js"></script>
+	<footer th:replace="/plantilla/plantilla :: footer">
+	</footer>
 </body>
+
 </html>

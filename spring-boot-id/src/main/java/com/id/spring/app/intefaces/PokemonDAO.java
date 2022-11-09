@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.id.spring.app.model.Pokemon;
 
 @Repository
-public interface IPokemon extends CrudRepository<Pokemon, Integer>{
+public interface PokemonDAO extends CrudRepository<Pokemon, Integer>{
 
 }
