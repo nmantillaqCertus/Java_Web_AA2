@@ -1,10 +1,5 @@
 package com.id.spring.app.controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -89,33 +84,15 @@ public class HomeController {
 			return "formulario";
 		}
 		
-		//Logica de file Pokemon
-		if (!imgPokemon.isEmpty()) {
-			Path rutaImagenesPokemon =  Paths.get("src//main//resources//static//Img_Pokemon");
-			String pathGeneric = rutaImagenesPokemon.toFile().getAbsolutePath();
-						
-			try {
-				byte[] bytesImgPokemon = imgPokemon.getBytes();
-				Path enlaceCompleto = Paths.get(pathGeneric+"//"+imgPokemon.getOriginalFilename());
-				Files.write(enlaceCompleto, bytesImgPokemon);
-				
-				pokemoncito.setUriImagen(imgPokemon.getOriginalFilename());
-				
-				
-			} catch (IOException e) {
-				model.addAttribute("titulo", "Spring Framework - Control de Errores");
-				model.addAttribute("respuesta", "Ocurrió un error al procesar el archivo");
-				model.addAttribute("errores", e.getStackTrace());
-				
-				return "errores";
-			}
-			
-			
+		if (imgPokemon.isEmpty() && pokemoncito.getUriImagen() == null) {
+			model.addAttribute("titlePage", titlePage);
+			model.addAttribute("titulo", "Spring Framework - Registro de Pokemon");
+			model.addAttribute("mensaje", "El pokemon requiere una imagen");
+			return "formulario";
 		}
 		
-		
 		model.addAttribute("titlePage", titlePage);
-		Response<Pokemon> response = IpService.CrearPokemon(pokemoncito);
+		Response<Pokemon> response = IpService.CrearPokemon(pokemoncito, imgPokemon);
 
 		if (response.getEstado()) {
 			model.addAttribute("titulo", "Spring Framework - Lista de Pokemon");
@@ -126,12 +103,18 @@ public class HomeController {
 			status.setComplete();
 			return "lista";
 		} else {
-			model.addAttribute("titulo", "Spring Framework - Control de Errores");
-			model.addAttribute("respuesta", response.getMensaje());
-			model.addAttribute("errores", response.getMensajeError());
-
-			status.setComplete();
-			return "errores";
+			
+			if (response.getMensaje().equals("IMG-ERROR")) {
+				return "formulario";
+			}else {
+			
+				model.addAttribute("titulo", "Spring Framework - Control de Errores");
+				model.addAttribute("respuesta", response.getMensaje());
+				model.addAttribute("errores", response.getMensajeError());
+	
+				status.setComplete();
+				return "errores";
+			}
 		}
 	}
 
