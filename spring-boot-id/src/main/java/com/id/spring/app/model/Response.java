@@ -3,7 +3,7 @@ package com.id.spring.app.model;
 import java.util.List;
 
 public class Response<T> {
-	private Boolean estado;
+	private Boolean estado;	
 	private String mensaje;
 	private String mensajeError;
 	private T data;

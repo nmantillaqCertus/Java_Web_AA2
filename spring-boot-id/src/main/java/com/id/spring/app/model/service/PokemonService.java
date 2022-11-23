@@ -1,32 +1,25 @@
 package com.id.spring.app.model.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
-import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.id.spring.app.config.SpringConfig;
-import com.id.spring.app.intefaces.PokemonDAO;
 import com.id.spring.app.model.Pokemon;
 import com.id.spring.app.model.Response;
+import com.id.spring.app.model.ResponseFile;
+import com.id.spring.app.repository.PokemonDAO;
 
 @Component
 public class PokemonService implements IPokemonService {
 
 	@Autowired
 	private PokemonDAO pokemonRepository;
-
+		
 	@Autowired
-	private SpringConfig rutaFiles;
+	private IFileGeneric fileGeneric;
 
 	@Override
 	public Response<Pokemon> ObtenerListaPokemon() {
@@ -35,8 +28,8 @@ public class PokemonService implements IPokemonService {
 		try {
 			response.setMensaje("Los mejores pokemones :D");
 			response.setEstado(true);
-			response.setListData((List<Pokemon>) pokemonRepository.findAll());
-
+			response.setListData((List<Pokemon>) pokemonRepository.findAll());			
+			
 		} catch (Exception e) {
 			response.setEstado(false);
 			response.setMensaje("Ocurrió un error al obtener los pokemones");
@@ -48,35 +41,23 @@ public class PokemonService implements IPokemonService {
 	public Response<Pokemon> CrearPokemon(Pokemon pokemoncito, MultipartFile filePokemon) {
 
 		Response<Pokemon> response = new Response<>();
+		ResponseFile responseFile = new ResponseFile();
 
 		try {
-
-			if (!filePokemon.isEmpty()) {
-				try {
-
-					if (pokemoncito.getUriImagen() != null) {
-
-						Path rutaFileElimar = Paths.get(rutaFiles.rutaGenrica() + "\\" + pokemoncito.getUriImagen());
-						File fileElimar = rutaFileElimar.toFile();
-						if (fileElimar.exists()) {
-							fileElimar.delete();
-						}
-					}
-
-					String NewNameFile = UUID.randomUUID().toString();
-					String extesionFile = org.springframework.util.StringUtils
-							.getFilenameExtension(filePokemon.getOriginalFilename());
-
-					byte[] bytesImgPokemon = filePokemon.getBytes();
-					Path enlaceCompleto = Paths.get(rutaFiles.rutaGenrica() + "//" + NewNameFile + "." + extesionFile);
-					Files.write(enlaceCompleto, bytesImgPokemon);
-
-					pokemoncito.setUriImagen(NewNameFile + "." + extesionFile);
-
-				} catch (IOException e) {
-					response.setEstado(false);
-					response.setMensaje("IMG-ERROR");
-					response.setMensajeError(e.getStackTrace().toString());
+			Boolean respuesta = true;
+			if (filePokemon!= null) {
+				
+				if (pokemoncito.getUriImagen() != null) { //Actualización de archivo
+					fileGeneric.eliminarFile(pokemoncito.getUriImagen());						
+				}
+				
+				responseFile = fileGeneric.guardarFile(filePokemon);
+				if (responseFile.getEstado()) {
+					pokemoncito.setUriImagen(responseFile.getNombreFile());
+				}else {
+					response.setEstado(responseFile.getEstado());
+					response.setMensaje("IMG-ERROR - error al procesar el archivo "+responseFile.getNombreFile());
+					response.setMensajeError(responseFile.getMensajeError());
 					return response;
 				}
 			}
@@ -85,7 +66,10 @@ public class PokemonService implements IPokemonService {
 			response.setEstado(true);
 			response.setData(p);
 			response.setListData((List<Pokemon>) pokemonRepository.findAll());
-			response.setMensaje("Se creó correctamente el " + p.getNombre());
+			if (respuesta) {
+				//Codigo de validacion de adjunto
+			}
+			response.setMensaje("Se creó correctamente el pokemon: " + p.getNombre());
 
 		} catch (Exception e) {
 			response.setEstado(false);
@@ -101,11 +85,11 @@ public class PokemonService implements IPokemonService {
 
 		try {
 			Optional<Pokemon> p = pokemonRepository.findById(id);
-
+			
 			response.setEstado(true);
 			response.setData(p.get());
 			response.setMensaje("Actualizando el pokemon " + p.get().getNombre());
-
+			
 		} catch (Exception e) {
 			response.setEstado(false);
 			response.setMensaje("Ocurrió un error actualizar el pokemon");
@@ -123,19 +107,13 @@ public class PokemonService implements IPokemonService {
 
 			if (p.get() != null) {
 
-				if (p.get().getUriImagen() != null) {
-
-					Path rutaFileElimar = Paths.get(rutaFiles.rutaGenrica() + "\\" + p.get().getUriImagen());
-					File fileElimar = rutaFileElimar.toFile();
-
-					if (fileElimar.exists()) {
-						fileElimar.delete();
-					}
+				if (p.get().getUriImagen() != null) {					
+					fileGeneric.eliminarFile(p.get().getUriImagen());	
 				}
 
 				pokemonRepository.deleteById(id);
 				response.setEstado(true);
-				response.setData(p.get());
+				response.setData(p.get());				
 				response.setMensaje("El pokemon " + p.get().getNombre() + " ha sido eliminado");
 			} else {
 				response.setEstado(false);

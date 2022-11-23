@@ -79,7 +79,7 @@ public class HomeController {
 			BindingResult br, 
 			Model model, 
 			@RequestParam("fileImagen") MultipartFile imgPokemon,  //EN ARCHIVO
-			SessionStatus status) {
+			SessionStatus status){
 		if (br.hasErrors()) {
 			return "formulario";
 		}
