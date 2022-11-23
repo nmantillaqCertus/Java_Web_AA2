@@ -1,6 +1,7 @@
 package com.id.spring.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration.NettyWebServerFactoryCustomizerConfiguration;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.id.spring.app.dto.PokemonDTO;
 import com.id.spring.app.model.Pokemon;
 import com.id.spring.app.model.Response;
 import com.id.spring.app.model.service.IPokemonService;
@@ -27,10 +30,21 @@ public class ApiRestController {
 	}
 	
 	@PutMapping("/crear")
-	public Response<Pokemon> crearPokemon(@RequestBody Pokemon pokemon){	
+	public Response<Pokemon> crearPokemon(@RequestBody PokemonDTO pokemonDto){	
 		Response<Pokemon> response = new Response<>();
+		
+		var fileBase64 = pokemonDto.getFileBase64();
+		
+		Pokemon pokemon = new Pokemon();
+		pokemon.setNombre(pokemonDto.getNombre());
+		
+		
+		
+		MultipartFile filePokemonAux = Ihelper.procesarFile(fileBase64);
+		
+		
 		try {
-			response = IpService.CrearPokemon(pokemon, null);			
+			response = IpService.CrearPokemon(pokemon, filePokemonAux);			
 		} catch (Exception e) {
 			response.setEstado(false);
 			response.setMensaje("Se produjo un erro al intentar crear el pokemon");
