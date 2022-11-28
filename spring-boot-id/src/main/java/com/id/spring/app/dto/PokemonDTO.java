@@ -8,9 +8,15 @@ public class PokemonDTO {
 	private String habilidad;
 	private String nivelPoder;
 	private String uriImagen;
+	private String nombreExtImagen;
 	private String fileBase64;
-	
-	
+		
+	public String getNombreExtImagen() {
+		return nombreExtImagen;
+	}
+	public void setNombreExtImagen(String nombreExtImagen) {
+		this.nombreExtImagen = nombreExtImagen;
+	}
 	public int getIdPokemon() {
 		return idPokemon;
 	}

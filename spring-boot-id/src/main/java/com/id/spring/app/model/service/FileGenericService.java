@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.id.spring.app.config.SpringConfig;
+import com.id.spring.app.helper.IHelper;
 import com.id.spring.app.model.ResponseFile;
 
 @Component
@@ -20,7 +22,11 @@ public class FileGenericService implements IFileGeneric {
 	@Autowired
 	private SpringConfig rutaFiles;
 	
+	@Autowired
+	private IHelper helper;
+	
 	@Override
+
 	public ResponseFile guardarFile(MultipartFile genericFile) {
 		ResponseFile responseFile = new ResponseFile();
 		
@@ -44,7 +50,31 @@ public class FileGenericService implements IFileGeneric {
 		return responseFile;
 	}
 	
-
+	@Override
+	public ResponseFile guardarFileAPI(String fileBase64,String nombreExtImagen) {
+		ResponseFile responseFile = new ResponseFile();
+		
+		String NewNameFile = UUID.randomUUID().toString();
+		Optional<Object> extesionFile = Optional.ofNullable(nombreExtImagen)
+												.filter( f-> f.contains("."))
+												.map(f->f.substring( nombreExtImagen.lastIndexOf(".")+1));
+							
+		try {
+			byte[] bytesImgPokemon = helper.procesarFile(fileBase64);
+			Path enlaceCompleto = Paths.get(rutaFiles.rutaGenrica() + "//" + NewNameFile + "." + extesionFile.get().toString());
+			Files.write(enlaceCompleto, bytesImgPokemon);
+			
+			responseFile.setEstado(true);
+			responseFile.setNombreFile(NewNameFile + "." + extesionFile.get().toString());
+			
+		} catch (IOException e) {
+			responseFile.setEstado(false);
+			responseFile.setNombreFile(NewNameFile + "." + extesionFile.get().toString());
+			responseFile.setMensajeError(e.getStackTrace().toString());
+		}		
+		return responseFile;
+	}
+	
 	@Override
 	public ResponseFile eliminarFile(String nombreFile) {
 		ResponseFile responseFile = new ResponseFile();

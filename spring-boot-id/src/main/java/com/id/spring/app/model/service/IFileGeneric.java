@@ -7,7 +7,10 @@ import com.id.spring.app.model.ResponseFile;
 
 public interface IFileGeneric {
 	
-	public ResponseFile guardarFile(MultipartFile genericFile);
+	public ResponseFile guardarFile(MultipartFile genericFile);	
+	
+	public ResponseFile guardarFileAPI(String fileBase64,String nombreExtImagen);
+	
 	public ResponseFile eliminarFile(String nombreFile);
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.id.spring.app.dto.PokemonDTO;
 import com.id.spring.app.model.Pokemon;
 import com.id.spring.app.model.Response;
 import com.id.spring.app.model.ResponseFile;
@@ -79,6 +80,54 @@ public class PokemonService implements IPokemonService {
 		return response;
 	}
 
+	
+	public Response<Pokemon> CrearPokemonAPI(PokemonDTO pokemoncito) {
+
+		Response<Pokemon> response = new Response<>();
+		ResponseFile responseFile = new ResponseFile();
+		Pokemon pk = new Pokemon();
+
+		try {
+			if (!pokemoncito.getFileBase64().isEmpty()) {
+				
+				if (pokemoncito.getUriImagen() != null) {
+					fileGeneric.eliminarFile(pokemoncito.getUriImagen());						
+				}
+				
+				responseFile = fileGeneric.guardarFileAPI(pokemoncito.getFileBase64(), pokemoncito.getNombreExtImagen());
+				if (responseFile.getEstado()) {
+					pokemoncito.setUriImagen(responseFile.getNombreFile());
+				}else {
+					response.setEstado(responseFile.getEstado());
+					response.setMensaje("IMG-ERROR - error al procesar el archivo "+responseFile.getNombreFile());
+					response.setMensajeError(responseFile.getMensajeError());
+					return response;
+				}
+			}
+			
+			pk.setIdPokemon(pokemoncito.getIdPokemon());
+			pk.setNombre(pokemoncito.getNombre());
+			pk.setCategoria(pokemoncito.getCategoria());
+			pk.setTipo(pokemoncito.getTipo());
+			pk.setHabilidad(pokemoncito.getHabilidad());
+			pk.setNivelPoder(pokemoncito.getNivelPoder());
+			pk.setUriImagen(pokemoncito.getUriImagen());
+
+			Pokemon p = pokemonRepository.save(pk);
+			
+			response.setEstado(true);
+			response.setData(p);
+			response.setListData((List<Pokemon>) pokemonRepository.findAll());			
+			response.setMensaje("Se creó correctamente el pokemon: " + p.getNombre());
+
+		} catch (Exception e) {
+			response.setEstado(false);
+			response.setMensaje("Ocurrió un error guardar/actualizar los pokemones");
+			response.setMensajeError(e.getStackTrace().toString());
+		}
+		return response;
+	}
+	
 	@Override
 	public Response<Pokemon> EditarPokemon(Integer id) {
 		Response<Pokemon> response = new Response<>();
