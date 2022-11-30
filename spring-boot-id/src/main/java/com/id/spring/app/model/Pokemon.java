@@ -28,8 +28,7 @@ public class Pokemon {
 	private String habilidad;
 	private String nivelPoder;
 	private String uriImagen;
-	
-			
+				
 	public int getIdPokemon() {
 		return idPokemon;
 	}

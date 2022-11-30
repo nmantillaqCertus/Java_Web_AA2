@@ -8,8 +8,7 @@ public class Response<T> {
 	private String mensajeError;
 	private T data;
 	private List<T> listData;
-	
-	
+		
 	public Boolean getEstado() {
 		return estado;
 	}

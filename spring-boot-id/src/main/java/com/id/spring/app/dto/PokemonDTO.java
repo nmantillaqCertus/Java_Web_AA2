@@ -55,7 +55,7 @@ public class PokemonDTO {
 	}
 	public String getUriImagen() {
 		return uriImagen;
-	}
+	} 
 	public void setUriImagen(String uriImagen) {
 		this.uriImagen = uriImagen;
 	}

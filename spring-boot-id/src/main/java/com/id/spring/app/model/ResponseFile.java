@@ -5,7 +5,7 @@ public class ResponseFile {
 	private String nombreFile;
 	private String mensajeError;
 	
-	public Boolean getEstado() {
+	public Boolean getEstado() { 
 		return estado;
 	}
 	public void setEstado(Boolean estado) {

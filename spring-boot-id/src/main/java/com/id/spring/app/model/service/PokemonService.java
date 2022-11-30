@@ -45,7 +45,6 @@ public class PokemonService implements IPokemonService {
 		ResponseFile responseFile = new ResponseFile();
 
 		try {
-			Boolean respuesta = true;
 			if (filePokemon!= null) {
 				
 				if (pokemoncito.getUriImagen() != null) { //Actualización de archivo
@@ -67,9 +66,7 @@ public class PokemonService implements IPokemonService {
 			response.setEstado(true);
 			response.setData(p);
 			response.setListData((List<Pokemon>) pokemonRepository.findAll());
-			if (respuesta) {
-				//Codigo de validacion de adjunto
-			}
+			
 			response.setMensaje("Se creó correctamente el pokemon: " + p.getNombre());
 
 		} catch (Exception e) {
@@ -133,8 +130,7 @@ public class PokemonService implements IPokemonService {
 		Response<Pokemon> response = new Response<>();
 
 		try {
-			Optional<Pokemon> p = pokemonRepository.findById(id);
-			
+			Optional<Pokemon> p = pokemonRepository.findById(id);			
 			response.setEstado(true);
 			response.setData(p.get());
 			response.setMensaje("Actualizando el pokemon " + p.get().getNombre());
@@ -155,7 +151,6 @@ public class PokemonService implements IPokemonService {
 			Optional<Pokemon> p = pokemonRepository.findById(id);
 
 			if (p.get() != null) {
-
 				if (p.get().getUriImagen() != null) {					
 					fileGeneric.eliminarFile(p.get().getUriImagen());	
 				}
